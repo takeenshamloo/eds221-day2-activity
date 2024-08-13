@@ -1,0 +1,44 @@
+---
+title: "EDS 221 Day 2: Vectors"
+author: "Takeen Shamloo"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+## Vectors
+
+```{r}
+vec_1 <- c(2, 5, 9, 10, 8, 12, 1, 0)
+class(vec_1) # return the class of our vector.
+typeof(vec_1) # returns the data type of the vector data
+
+vec_1_e3 <- vec_1[3] # return element 3
+vec_1_e1 <- vec_1[1] # return element 1
+
+vec_1_e5to7 <- vec_1[5:8] # return elements 5-7 (assuming inclusive)
+
+vec_1_char <- as.character(vec_1) # returns our vec 1 as a char vector instead of numeric
+
+vec_2 <- c(town = "Santa Barbara", location = "Rincon", swell = "south")
+vec_2 # view vector
+
+class(vec_2) 
+length(vec_2) # vector length
+
+vec_2_e2 <- vec_2["location"] # accessing the second element by name
+vec_2_e2
+
+df_1 <- data.frame(region = c("A", "B", "A", "D"), 
+                   species = c("otter", "great white", "sea lion", "gray whale"),
+                   count = c(12L, 2L, 36L, 6L))
+df_1
+class(df_1) # data frame's class
+class(df_1[[2]]) # Class of the species column's data
+
+max_count <- sum(df_1[3])
+max_count
+```
+
+
+

@@ -1,0 +1,75 @@
+---
+title: "EDS 221 Day 2: Wild Data"
+author: "Takeen Shamloo"
+format: html
+editor_options: 
+  chunk_output_type: console
+execute:
+  warning: false
+  message: false
+---
+
+```{r}
+# Load libraries ----
+library(tidyverse)
+library(janitor)
+library(here)
+```
+
+## Wild Data
+
+### Initializing Data
+```{r}
+# Read in our data ----
+mack_verts <- read.csv(here::here("data", "AS00601.csv"))
+# view(mack_verts) if need be check using this line
+```
+
+### Data Wrangling
+```{r}
+# Makes names to lower_snake_case
+mack_verts <- mack_verts |> clean_names()
+
+mc_wt_5 <- mack_verts$weight[5] # store 5th element of weight
+mc_length_8_20 <- mack_verts$length1[8:20] # storing a vector containing elements 8-20 of col length1
+mc_length_8_20 # check and cross reference data
+
+mc_dates <- mack_verts$sampledate # store col sampledate to a vector
+```
+
+### Dealing with salamanders
+
+```{r}
+# Filter our dataset for only Pacific Giant Salamanders
+mc_salamanders <- dplyr::filter(mack_verts, species == "DITE")
+
+ggplot(mc_salamanders,
+       aes(x = length1, y = weight)) + 
+  geom_point(aes(color = length1)) +
+  labs(title = "Pacific Giant Salamanders", subtitle = "Snout-vent length (mm) vs weight (g)", caption = "Aquatic Vertebrate Population Study in Mack Creek, Andrews Experimental Forest, 1987 to present", x = "Snout-vent length (mm)", y = "Weight (g)")
+
+# Export plot
+ggsave(here::here("figs", "salamander_size.png"), height = 6, width = 7)
+```
+
+### Dealing with trout
+```{r}
+# Filter for cutthroat trout species
+mc_trout <- dplyr::filter(mack_verts, species == "ONCL")
+
+ggplot(mc_trout,
+       aes(x = length1, y = weight)) + 
+  geom_point(aes(color = reach)) +
+  scale_color_manual(values = c("maroon", "pink", "purple")) +
+  labs(title = "Cutthroat Trout", 
+       subtitle = "Length (mm) vs Weight (g)", 
+       caption = "Aquatic Vertebrate Population Study in Mack Creek, Andrews Experimental Forest, 1987 to present", 
+       x = "Length (mm)", 
+       y = "Weight (g)") + 
+  facet_wrap(~ reach)
+
+# Export plot
+ggsave(here::here("figs", "cutthroat_size.png"), height = 6, width = 7)
+```
+
+
