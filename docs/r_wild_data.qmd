@@ -68,7 +68,7 @@ ggplot(mc_trout,
        y = "Weight (g)") + 
   facet_wrap(~ reach)
 
-# Export plot
+# Export scatterplot
 ggsave(here::here("figs", "cutthroat_size.png"), height = 6, width = 7)
 ```
 
